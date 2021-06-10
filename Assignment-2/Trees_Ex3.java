@@ -1,12 +1,12 @@
 // Iman Ereiqat
-// Uber Career Prep Homework Trees Ex2
+// Uber Career Prep Homework Trees Ex3
 // May 26, 2021
 //
 
 import java.util.*;
 
 
-public class Trees_Ex2
+public class Trees_Ex3
 {
     // Employee class
     static class Employee
@@ -61,11 +61,40 @@ public class Trees_Ex2
                 System.out.println("");
             }
         }
+        
+        // Function prints the number of levels
+        // in the organization structure
+        public void printNumLevels(Employee ceo)
+        {
+            Queue<Employee> eQueue = new LinkedList<>();
+            eQueue.add(ceo);
+            int size = 0;
+            int count = 0;
+            
+            while (eQueue.size() > 0)
+            {
+                size = eQueue.size();
+                
+                for (int i = 0; i < size; i++)
+                {
+                    Employee curr = eQueue.poll(); 
+                    if (!curr.directReports.isEmpty()) 
+                    {
+                        for (int j = 0; j < curr.directReports.size(); j++)
+                        {
+                            eQueue.add(curr.directReports.get(j)); 
+                        }
+                    }
+                }
+                count++;
+            }
+            System.out.printf("Number of levels: %d\n\n", count);
+        }
     }
     
     public static void main(String args[])
     {
-        System.out.println("\n***UCP HW TREES EX2***\n");
+        System.out.println("\n***UCP HW TREES EX3***\n");
         
         Employee ceo = new Employee("A", "CEO");
         
@@ -99,6 +128,8 @@ public class Trees_Ex2
         salesRep.directReports.add(intern);
         
         OrganizationStructure organizationStruct = new OrganizationStructure(ceo);
+        
+        organizationStruct.printNumLevels(ceo);
         
         organizationStruct.printLevelByLevel(ceo);
     }
